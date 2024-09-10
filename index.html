@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModiJiUrl.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px; /* Padding added for fixed header */
+            min-height: 100vh;
+        }
+
+        /* Dynamic header with star effect */
+        .header {
+            background: linear-gradient(135deg, #3f51b5 0%, #5c6bc0 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            overflow: hidden;
+            /* Remove position and overflow to fix illustration issue */
+            position: fixed;
+            overflow: hidden;
+        }
+
+        /* Add star-like shine animation */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(white 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.6;
+            animation: stars 10s linear infinite;
+            z-index: 1;
+        }
+
+        /* Keyframes for the moving star effect */
+        @keyframes stars {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: 1000px 1000px;
+            }
+        }
+
+        /* Keep header text with z-index to avoid star overlay */
+        .header {
+            z-index: 2;
+        }
+
+        .container {
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .message {
+            font-size: 24px;
+            color: #555;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .timer {
+            font-size: 40px;
+            color: #3f51b5;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .wait-btn {
+            padding: 15px 30px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: not-allowed;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .wait-btn:hover {
+            opacity: 1;
+        }
+
+        .ready-link {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .ready-link a {
+            color: #3f51b5;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .ready-link a:hover {
+            color: #ff5722;
+        }
+
+        footer {
+            background-color: #3f51b5;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Header -->
+    <div class="header">
+        ModiJiUrl.com
+    </div>
+
+    <div class="container">
+        <div class="message">Your link is almost ready.</div>
+        <div class="timer" id="timer">10 Seconds</div>
+        <button class="wait-btn" id="wait-btn" disabled>PLEASE WAIT...</button>
+        <div class="ready-link" id="ready-link">
+            <p>Your link is ready: <a href="https://example.com" target="_blank">Click here</a></p>
+        </div>
+    </div>
+
+    <footer>
+        © 2024 ModiJiUrl. All rights reserved.
+    </footer>
+
+    <script>
+        let timeLeft = 10;
+        const timerElement = document.getElementById('timer');
+        const waitBtn = document.getElementById('wait-btn');
+        const readyLink = document.getElementById('ready-link');
+
+        // Timer function
+        const countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                // Display the link and update the button
+                timerElement.textContent = "0 Seconds";
+                waitBtn.textContent = "Link Ready!";
+                waitBtn.style.opacity = "1";
+                waitBtn.style.cursor = "pointer";
+                waitBtn.disabled = false;
+                readyLink.style.display = "block";
+            } else {
+                timerElement.textContent = `${timeLeft} Seconds`;
+            }
+            timeLeft -= 1;
+        }, 1000);
+    </script>
+
+</body>
+</html>
